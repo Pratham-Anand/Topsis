@@ -57,7 +57,7 @@ def send_mail(email_id,resultfile):
     s.starttls()
   
 # Authentication
-    s.login(fromaddr, "qhcxyrazfbxpzgty")
+    s.login(fromaddr, "Password") #Here password will be unique for every users...
   
 # Converts the Multipart msg into a string
     text = msg.as_string()
