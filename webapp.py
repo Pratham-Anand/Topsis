@@ -57,7 +57,7 @@ def send_mail(email_id,resultfile):
     s.starttls()
   
 # Authentication
-    s.login(fromaddr, "Password") #Here password will be unique for every users...
+    s.login(fromaddr, "qhcxyrazfbxpzgty")
   
 # Converts the Multipart msg into a string
     text = msg.as_string()
@@ -71,33 +71,32 @@ def send_mail(email_id,resultfile):
 # Topsis Function:
 # Checking the given input constraints
 
-def topsis(db,weights,impacts,resultfile,email_id):
-        
-    if(db.shape[1]<3):
-        print("Excel file must contain atleast 3 columns")
-        sys.exit(1)
-    
-    
-    weights=weights.split(',')
-        
-    impacts=impacts.split(',')
+def topsis(db, weights, impacts, resultfile, email_id):
 
-    
-    if ((len(weights) == len(impacts)==(db.shape[1]-1))==False):
-        print("Number of columns ,impacts and weights must be same.Try Again!")
-        sys.exit(1)
-        
-    for imp in impacts :
-        if(imp=='+' or imp=='-'):
-            continue
-        else:
-            print("Impacts should only contain '+' or '-' symbols")
-            sys.exit(1)
-            
-    cate_features=[i for i in db.columns[1:] if db.dtypes[i]=='object']
-    if(len(cate_features)!=0):
-        print("All columns except first should contain only numerical values! Try Again")
-        sys.exit(1)
+    # Checking the given input constraints
+    error_message = ""
+
+    if db.shape[1] < 3:
+        error_message = "Excel file must contain at least 3 columns"
+
+    weights = weights.split(',')
+    impacts = impacts.split(',')
+
+    if len(weights) != len(impacts) or len(weights) != (db.shape[1] - 1):
+        error_message = "Number of columns, impacts, and weights must be the same. Try Again!"
+
+    for imp in impacts:
+        if imp not in ('+', '-'):
+            error_message = "Impacts should only contain '+' or '-' symbols"
+
+    cate_features = [i for i in db.columns[1:] if db.dtypes[i] == 'object']
+    if len(cate_features) != 0:
+        error_message = "All columns except the first should contain only numerical values! Try Again"
+
+    if error_message:
+        st.error(error_message)
+        return
+
 
 # Normalisation
     features = db.iloc[:,1:].values
