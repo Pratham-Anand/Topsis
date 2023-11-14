@@ -58,7 +58,7 @@ def send_mail(email_id,resultfile):
   
 # Authentication
     email_password = st.secrets["EMAIL_PASSWORD"]
-    s.login(fromaddr, "qhcxyrazfbxpzgty")
+    s.login(fromaddr, email_password)
   
 # Converts the Multipart msg into a string
     text = msg.as_string()
