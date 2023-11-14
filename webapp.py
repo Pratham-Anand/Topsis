@@ -57,7 +57,7 @@ def send_mail(email_id,resultfile):
     s.starttls()
   
 # Authentication
-    s.login(fromaddr, "qhcxyrazfbxpzgty")
+    s.login(fromaddr, "your password here") 
   
 # Converts the Multipart msg into a string
     text = msg.as_string()
